@@ -1,4 +1,5 @@
-import { Box, AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemText, Button } from '@mui/material';
+import { signout } from './components/auth';
 
 const drawerWidth = 240;
 
@@ -12,6 +13,9 @@ function CentralPage() {
             Central Page
           </Typography>
         </Toolbar>
+        <Button onClick={signout}>
+            Sign Out
+        </Button>
       </AppBar>
 
       {/* Sidebar */}

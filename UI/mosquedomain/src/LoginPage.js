@@ -1,14 +1,23 @@
 import { Box, Grid, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import backgroundImage from './assets/background.png'; // Import the image
+import { useState } from 'react';
+import { googlesignin } from './components/auth';
+
 
 function LoginPage() {
   const navigate = useNavigate();
-
+  const [Email, setEmail] = useState("")
+  const [Password, setPassword] = useState("")
   // Handle login button click
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    
     navigate('/central'); // Navigate to the central page
   };
+  const handleGoogleLogin = async () => {
+    await googlesignin()
+    navigate('/central')
+  }
 
   return (
     <Grid container sx={{ height: '100vh' }}>
@@ -48,16 +57,21 @@ function LoginPage() {
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}
-          />
+            onChange={(e)=>{setEmail(e.target.value)}}
+            />
           <TextField
             label="Password"
             variant="outlined"
             type="password"
             fullWidth
             sx={{ mb: 2 }}
+            onChange={(e)=>{setPassword(e.target.value)}}
           />
           <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
             Login
+          </Button>
+          <Button variant="contained" color="primary" fullWidth onClick={handleGoogleLogin}>
+            LoginWithGoogle
           </Button>
         </Box>
       </Grid>
