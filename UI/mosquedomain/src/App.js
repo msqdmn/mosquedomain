@@ -15,6 +15,7 @@ function App() {
         <Route path="/analytics" element={<Analytics/>} />
 
         </Route>
+        <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/central" element={<CentralPage />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
