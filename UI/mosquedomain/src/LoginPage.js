@@ -2,7 +2,7 @@ import { Box, Grid, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import backgroundImage from './assets/background.png'; // Import the image
 import { useState } from 'react';
-import { googlesignin } from './components/auth';
+import { googlesignin,signup,SignIn } from './components/auth';
 
 
 function LoginPage() {
@@ -11,12 +11,17 @@ function LoginPage() {
   const [Password, setPassword] = useState("")
   // Handle login button click
   const handleLogin = async () => {
-    
+    console.log("Signed IN ",Email,Password)
+    await SignIn(Email,Password)
     navigate('/central'); // Navigate to the central page
   };
   const handleGoogleLogin = async () => {
     await googlesignin()
     navigate('/central')
+  }
+  const handleSignUp = async() => {
+    await signup(Email,Password)
+    console.log("Signed UP ",Email,Password)
   }
 
   return (
@@ -53,7 +58,7 @@ function LoginPage() {
             Login
           </Typography>
           <TextField
-            label="Username"
+            label="Email"
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}
@@ -72,6 +77,9 @@ function LoginPage() {
           </Button>
           <Button variant="contained" color="primary" fullWidth onClick={handleGoogleLogin}>
             LoginWithGoogle
+          </Button>
+          <Button variant="contained" color="primary" fullWidth onClick={handleSignUp}>
+            Sign Up
           </Button>
         </Box>
       </Grid>

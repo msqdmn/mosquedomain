@@ -98,7 +98,7 @@ function CentralPage() {
                 </Button>
                 <AuthStatus/>
                 
-                {transactions.length > 0 ? (
+                {/* {transactions.length > 0 ? (
                     <Box sx={{height:400}}> 
 
                     <DataGrid
@@ -111,7 +111,7 @@ function CentralPage() {
                         </Box>
                 ) : (
                     <Typography>Loading transactions...</Typography>
-                )}
+                )} */}
             </Box>
         </Box>
     );

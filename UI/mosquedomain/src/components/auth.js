@@ -1,4 +1,4 @@
-import {createUserWithEmailAndPassword,signOut,signInWithPopup,onAuthStateChanged} from 'firebase/auth'
+import {createUserWithEmailAndPassword,signOut,signInWithPopup,onAuthStateChanged,signInWithEmailAndPassword} from 'firebase/auth'
 import {googleAuthProvider,auth,db} from '../config/firebase'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'; // For navigation
 import React, { useEffect, useState } from 'react'; 
@@ -10,6 +10,14 @@ export const signup = async (Email,Password) =>{
     } catch (error) {
         console.error(error)
     }
+}
+
+export const SignIn = async (Email,Password) =>{
+  try{
+    await signInWithEmailAndPassword(auth,Email,Password)
+  }catch(error){
+    console.error(error)
+  }
 }
 
 export const Signout = async () => {
