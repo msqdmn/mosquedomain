@@ -2,27 +2,42 @@ import { Box, Grid, Typography, TextField, Button, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import { useState } from 'react';
 import { googlesignin, signup, SignIn } from './components/auth';
+import { useError } from './components/ErrorContext'; // Import the error context
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { triggerError } = useError(); // Get the triggerError function from the context
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
   // Handle login button click
   const handleLogin = async () => {
-    console.log("Signed IN ", Email, Password);
-    await SignIn(Email, Password);
-    navigate('/central'); // Navigate to the central page
+    try {
+      console.log("Signed IN ", Email, Password);
+      await SignIn(Email, Password);
+      navigate('/central'); // Navigate to the central page
+    } catch (error) {
+      
+      triggerError(error.message || "An error occurred during login.");
+    }
   };
 
   const handleGoogleLogin = async () => {
-    await googlesignin();
-    navigate('/central');
+    try {
+      await googlesignin();
+      navigate('/central');
+    } catch (error) {
+      triggerError(error.message || "An error occurred during Google login.");
+    }
   };
 
   const handleSignUp = async () => {
-    await signup(Email, Password);
-    console.log("Signed UP ", Email, Password);
+    try {
+      await signup(Email, Password);
+      console.log("Signed UP ", Email, Password);
+    } catch (error) {
+      triggerError(error.message || "An error occurred during sign-up.");
+    }
   };
 
   return (
@@ -41,7 +56,7 @@ function LoginPage() {
           }}
         >
           <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#333', textAlign: 'center' }}>
-            Welcome 
+            Welcome Back
           </Typography>
           <TextField
             label="Email"

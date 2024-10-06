@@ -4,12 +4,30 @@ import { db } from './config/firebase';
 import { useEffect, useState } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { DataGrid } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom'; // For navigation
+
 
 const Analytics = () => {
 
     const drawerWidth = 240;
+    const navigate = useNavigate();
 
     const [transactions, setTransactions] = useState([]);
+    const handlePOST = () => {
+        navigate('/posttransaction');
+
+    }
+    const handlePAYMENT = () =>{
+        navigate('/postpayment')
+    }
+
+    const HandleRowClick = (params) => {
+        // navigate('')
+        const emailww = params.row.Email; // Assuming email is in your row data
+        console.log(emailww)
+        navigate('/userdetails', { state: { Email: emailww } }); // Navigate and pass email as state
+
+    }
     
     useEffect(() => {  
         const getTransactionsList = async () => {
@@ -48,19 +66,25 @@ const Analytics = () => {
                 
                 {transactions.length > 0 ? (
                     <Box sx={{height:400}}> 
-
+                {console.log(transactions.Email)}
                     <DataGrid
                         rows={transactions}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        checkboxSelection
+                        onRowClick={HandleRowClick}
                         />
                         </Box>
                 ) : (
                     <Typography>Loading transactions...</Typography>
                     )}
-            </Box>
+                <Button variant="contained" color="primary"  onClick={handlePOST}>
+                    ADD USER
+                </Button>
+                <Button variant="contained" color="primary"  onClick={handlePAYMENT}>
+                    ADD PAYMENT
+                </Button>
+    </Box>
                     </>
   )
 }

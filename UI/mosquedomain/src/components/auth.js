@@ -2,7 +2,7 @@ import {createUserWithEmailAndPassword,signOut,signInWithPopup,onAuthStateChange
 import {googleAuthProvider,auth,db} from '../config/firebase'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'; // For navigation
 import React, { useEffect, useState } from 'react'; 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc,collection,addDoc } from "firebase/firestore";
 
 export const signup = async (Email,Password) =>{
     try {
@@ -17,6 +17,7 @@ export const SignIn = async (Email,Password) =>{
     await signInWithEmailAndPassword(auth,Email,Password)
   }catch(error){
     console.error(error)
+    throw error
   }
 }
 
@@ -122,7 +123,7 @@ export const AuthStatus = () => {
   };
 
   
- const createOrGetUserRole = async (user) => {
+ export const createOrGetUserRole = async (user) => {
     if (!user) return;
   
     const userRef = doc(db, "users", user.uid); // Reference to Firestore 'users' collection
@@ -149,4 +150,41 @@ export const AuthStatus = () => {
       return existingUser;
     }
   };
+export const PostTransaction = async (transaction) => {
+      const transactionRef = doc(db, "transactions", transaction["ID Number"]); // Reference to Firestore 'users' collection
+    const userSnap = await getDoc(transactionRef); // Get user document snapshot
   
+    if (!userSnap.exists()) {
+      // If user doesn't exist, create new user document with default 'user' role
+      const transactionData = {
+        Address:transaction.Address,
+        "ID Number":transaction["ID Number"],
+        "Mobile Number":transaction["Mobile Number"],
+        Name:transaction.Name,
+        Email:transaction.Email
+      };
+      await setDoc(transactionRef, transactionData);
+      console.log("New Entry added on transaction table");
+    }
+}  
+export const PostPayment = async (payment) => {
+  const paymentRef = collection(db,'payment') // Reference to Firestore 'users' collection
+  
+
+    const paymentData = {
+      Email:payment.Email,
+      Date:payment.Date
+    };
+    await addDoc(paymentRef, paymentData);
+    console.log("New Entry added on payment table");
+  
+}
+
+export const GetTransaction = async (Email) => {
+  const transactionRef = doc(db, "transactions", Email); // Reference to Firestore 'users' collection
+  const TransactionSnap= await getDoc(transactionRef);
+  const existingTransaction =  TransactionSnap.data();
+      
+      return existingTransaction;
+
+}

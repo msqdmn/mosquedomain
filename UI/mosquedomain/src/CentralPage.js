@@ -49,16 +49,16 @@ function CentralPage() {
     return (
         <Box sx={{ display: 'flex' }}>
             {/* Navigation Bar */}
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+            {/* <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Toolbar>
                     <Typography variant="h6" noWrap>
                         Central Page
                     </Typography>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
 
             {/* Sidebar */}
-            <Drawer
+            {/* <Drawer
             variant="permanent"
             sx={{
                 width: drawerWidth,
@@ -80,7 +80,7 @@ function CentralPage() {
                     ))}
                 </List>
             </Box>
-        </Drawer>
+        </Drawer> */}
             {/* Main Content Area */}
             <Box
                 component="main"
